@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TENNIS JASOOS</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    background: #0d1b2a;
+    overflow-x: hidden;
+    
+  }
+
+  .bg-scene {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(rgba(2, 11, 24, 0.8), rgba(5, 25, 55, 0.8)), url('./image.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* Cricket texture overlay */
+  .bg-scene::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Big text behind - VIJAY BHAI */
+  .big-bg-text {
+    position: fixed;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 18vw, 220px);
+    color: rgba(255,255,255,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .big-bg-text2 {
+    position: fixed;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(50px, 12vw, 150px);
+    color: rgba(255,255,255,0.03);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    letter-spacing: 0.08em;
+  }
+
+  /* Cricket ball silhouette */
+  .cricket-ball {
+    position: fixed;
+    top: 10%;
+    right: 5%;
+    width: clamp(150px, 20vw, 300px);
+    height: clamp(150px, 20vw, 300px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(180,50,20,0.15), rgba(100,20,10,0.08));
+    border: 2px solid rgba(180,50,20,0.1);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .cricket-ball::before {
+    content: '';
+    position: absolute;
+    top: 48%;
+    left: 10%;
+    right: 10%;
+    height: 4%;
+    border-radius: 50%;
+    border: 2px solid rgba(180,50,20,0.12);
+  }
+
+  /* Card */
+  .card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+  }
+
+  .profile-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+  }
+
+  /* Feature row */
+  .feature-row {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    transition: all 0.25s ease;
+  }
+  .feature-row:hover {
+    background: rgba(0, 210, 255, 0.06);
+    border-color: rgba(0, 210, 255, 0.2);
+    transform: translateX(4px);
+  }
+
+  .icon-box {
+    background: linear-gradient(135deg, #00d2ff, #0081ff);
+    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* CTA Button */
+  .cta-btn {
+    background: linear-gradient(135deg, #ff4d4d 0%, #cc0000 50%, #ff4d4d 100%);
+    background-size: 200% 100%;
+    border: none;
+    border-radius: 14px;
+    padding: 16px 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 30px rgba(255, 77, 77, 0.35);
+    animation: shimmer 3s infinite;
+  }
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(255, 77, 77, 0.5);
+  }
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 0%; }
+    50% { background-position: 100% 0%; }
+  }
+
+  /* Badges */
+  .badge-premium {
+    background: linear-gradient(135deg, #00d2ff, #0081ff);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .badge-live {
+    background: #e53e3e;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    animation: pulse-red 2s infinite;
+  }
+  @keyframes pulse-red {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(229,62,62,0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(229,62,62,0); }
+  }
+  .live-dot {
+    width: 7px; height: 7px;
+    background: #fff;
+    border-radius: 50%;
+    animation: blink 1.2s infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* Logo image placeholder with gradient */
+  .logo-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #001a33, #003366);
+    border: 2px solid rgba(0, 210, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* Fade-in animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up-1 { animation: fadeUp 0.6s ease forwards; }
+  .fade-up-2 { animation: fadeUp 0.6s 0.15s ease both; }
+  .fade-up-3 { animation: fadeUp 0.6s 0.3s ease both; }
+  .fade-up-4 { animation: fadeUp 0.6s 0.45s ease both; }
+  .fade-up-5 { animation: fadeUp 0.6s 0.6s ease both; }
+
+  /* Telegram icon */
+  .tg-icon {
+    width: 26px; height: 26px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  /* Mobile Optimizations */
+  @media (max-width: 640px) {
+    .logo-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 100%;
+    }
+    .cta-btn {
+      font-size: 26px;
+      padding: 20px 32px;
+    }
+    /* h1 {
+      font-size: clamp(44px, 12vw, 60px) !important;
+    } */
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-scene"></div>
+<div class="big-bg-text">TENNIS JASOOS</div>
+<div class="big-bg-text2">TENNIS PREDICTION</div>
+<div class="cricket-ball"></div>
+
+<!-- Main layout -->
+<div style="position:relative;z-index:1;" class="min-h-screen flex items-center justify-center p-4 py-10">
+  <div style="width:100%;max-width:420px;">
+
+    <!-- Main Card -->
+    <div class="card p-6 fade-up-1">
+
+      <!-- Title -->
+      <div class="text-center mb-5">
+        <h1 style="font-family:'Bebas Neue',sans-serif;color:#00d2ff;letter-spacing:3px;line-height:1;margin:0 0 6px 0;" class="text-3xl">TENNIS JASOOS</h1>
+        <p style="color:rgba(255,255,255,0.55);font-size:14px;letter-spacing:1px;margin:0;">Premium Tennis Analysis &amp; Predictions</p>
+      </div>
+
+      <!-- Profile Section -->
+      <div class="profile-card p-4 mb-5 fade-up-2">
+        <div style="display:flex;align-items:center;gap:14px;" class="flex-col md:flex-row">
+          <div class="logo-img">
+            <img src="http://gurugyan.fun/wp-content/uploads/2026/04/jasoos-dp.jpeg" alt="" class="">
+            <!-- Cricket themed logo SVG -->
+            
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <span class="badge-premium">⭐ Premium Analyst</span>
+            <span class="badge-live"><span class="live-dot"></span> Live Updates</span>
+            <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="rgba(255,255,255,0.6)" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/></svg>
+              100k+ Members
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Button -->
+      <div class="mb-5 fade-up-3">
+        <a href="https://telegram.me/+M9UzsxWmEtAwNjJl" target="_blank" class="cta-btn">
+          <div class="tg-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </div>
+          JOIN TELEGRAM NOW
+        </a>
+      </div>
+
+      <!-- Features -->
+      <div style="display:flex;flex-direction:column;gap:10px;" class="fade-up-4">
+
+        <div class="feature-row p-3" style="display:flex;align-items:center;gap:14px;">
+          <div class="icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 20V10M12 20V4M6 20v-6" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <p style="margin:0;color:#fff;font-weight:700;font-size:16px;letter-spacing:0.5px;">Expert Analysis</p>
+            <p style="margin:0;color:rgba(255,255,255,0.45);font-size:13px;">Professional Tennis insights</p>
+          </div>
+        </div>
+
+        <div class="feature-row p-3" style="display:flex;align-items:center;gap:14px;">
+          <div class="icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <div>
+            <p style="margin:0;color:#fff;font-weight:700;font-size:16px;letter-spacing:0.5px;">Live Match Updates</p>
+            <p style="margin:0;color:rgba(255,255,255,0.45);font-size:13px;">Real-time coverage &amp; scores</p>
+          </div>
+        </div>
+
+        <div class="feature-row p-3" style="display:flex;align-items:center;gap:14px;">
+          <div class="icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#111" stroke-width="2.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <p style="margin:0;color:#fff;font-weight:700;font-size:16px;letter-spacing:0.5px;">Active Community</p>
+            <p style="margin:0;color:rgba(255,255,255,0.45);font-size:13px;">Connect with cricket fans</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-5 text-center fade-up-5">
+        <p style="color:rgba(255,255,255,0.3);font-size:12px;margin:0 0 4px 0;">For entertainment purposes only.</p>
+        <!-- <p style="color:#00d2ff;font-size:12px;margin:0;opacity:0.7;">Advertise BY Marketing Jasoos</p> -->
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
